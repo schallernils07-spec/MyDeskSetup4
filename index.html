@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mein Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f12;
+    --bg-raised: #15181d;
+    --line: #24282f;
+    --ink: #e7e9ec;
+    --ink-dim: #9aa0aa;
+    --accent: #55e0b0;
+    --accent-dim: #2c5c4b;
+    --radius: 4px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  a { color: inherit; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  header.top {
+    padding: 28px 0 0;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand .mark {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+  .brand .mark span { color: var(--accent); }
+  .brand .count { color: var(--ink-dim); font-size: 0.85rem; }
+
+  .hero {
+    padding: 64px 0 48px;
+    max-width: 640px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    line-height: 1.12;
+  }
+  .hero p {
+    color: var(--ink-dim);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-top: 18px;
+    max-width: 52ch;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-bottom: 80px;
+  }
+  .card {
+    background: var(--bg-raised);
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card .icon {
+    width: 40px;
+    height: 40px;
+    color: var(--accent);
+  }
+  .card .icon svg { width: 100%; height: 100%; }
+  .card h3 {
+    font-size: 1.08rem;
+    font-weight: 600;
+  }
+  .card .price {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    color: var(--accent);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  .card .note {
+    color: var(--ink-dim);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+  .card a.buy {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    padding: 11px 16px;
+    background: transparent;
+    border: 1px solid var(--ink-dim);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+  .card a.buy:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(85, 224, 176, 0.06);
+  }
+  .card a.buy svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  footer.site {
+    border-top: 1px solid var(--line);
+    padding: 28px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: var(--ink-dim);
+    font-size: 0.85rem;
+  }
+  footer.site button {
+    background: none;
+    border: none;
+    color: var(--ink-dim);
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 0;
+  }
+  footer.site button:hover { color: var(--ink); }
+
+  /* Legal overlay */
+  #legal {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 32px 0 60px;
+    display: none;
+  }
+  #legal.open { display: block; }
+  #legal .wrap { max-width: 680px; }
+  #legal .back {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 32px;
+    padding: 0;
+  }
+  #legal h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+  #legal section { margin-bottom: 40px; }
+  #legal h3 {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: var(--accent);
+  }
+  #legal p {
+    color: var(--ink-dim);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0 0 10px;
+  }
+  #legal .addr {
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card a.buy { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark">Nils<span>.</span>Setup</div>
+      <div class="count">5 Produkte</div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Das steht auf meinem Schreibtisch</h1>
+    <p>Eine kleine Auswahl an Sachen aus meinem Gaming- und Streaming-Setup. Klick auf ein Produkt, um es direkt bei Amazon anzusehen.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="grid">
+
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v9"/><path d="M12 12c-4 0-6-2-6-2"/><rect x="9" y="14" width="6" height="4" rx="1"/><path d="M12 18v3"/><path d="M8 21h8"/>
+        </svg>
+      </div>
+      <h3>Mikrofonarm</h3>
+      <div class="price">64,90&nbsp;€</div>
+      <p class="note">Stabiler Federarm für das Mikrofon, spart Platz auf dem Tisch und lässt sich frei positionieren.</p>
+      <a class="buy" href="https://www.amazon.de/gp/product/B0CW3MF8PX?smid=AAXFWUYH9R7LD&th=1&linkCode=ll2&tag=nilsschaller-21&linkId=6c7a094032b63b25de3c281584238338&ref_=as_li_ss_tl" target="_blank" rel="noopener sponsored">
+        Bei Amazon ansehen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="3" width="10" height="18" rx="3"/><circle cx="12" cy="9" r="2.2"/><circle cx="12" cy="15.5" r="1"/>
+        </svg>
+      </div>
+      <h3>Gaming Lautsprecher</h3>
+      <div class="price">49,99&nbsp;€</div>
+      <p class="note">Kompakte Desktop-Lautsprecher mit ordentlich Bass für Games, Musik und Filme.</p>
+      <a class="buy" href="https://www.amazon.de/gp/product/B0CYHJKGKZ?smid=A3F9DWUS9564BL&th=1&linkCode=ll2&tag=nilsschaller-21&linkId=054e270b1dd4c12f03976bd6ecf9e320&ref_=as_li_ss_tl" target="_blank" rel="noopener sponsored">
+        Bei Amazon ansehen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/>
+        </svg>
+      </div>
+      <h3>Mondlampe</h3>
+      <div class="price">21,63&nbsp;€</div>
+      <p class="note">3D-Mondlampe mit sanftem Licht, sorgt für die richtige Stimmung im Hintergrund.</p>
+      <a class="buy" href="https://www.amazon.de/gp/product/B0DRNSX96H?smid=A2ODN3R1MAAV9Z&psc=1&linkCode=ll2&tag=nilsschaller-21&linkId=7ae7b49a932f5e459ebb00754387199c&ref_=as_li_ss_tl" target="_blank" rel="noopener sponsored">
+        Bei Amazon ansehen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M9 20h6"/><path d="M12 16v4"/><path d="M12 8h.01"/>
+          <path d="M2.5 3.5 4 5"/><path d="M21.5 3.5 20 5"/>
+        </svg>
+      </div>
+      <h3>Monitor Light Bar</h3>
+      <div class="price">37,99&nbsp;€</div>
+      <p class="note">Wird oben am Monitor befestigt und beleuchtet den Schreibtisch, ohne dass Licht auf den Bildschirm fällt.</p>
+      <a class="buy" href="https://www.amazon.de/gp/product/B0GL7M99NB?smid=A2PQ0T99I2T48E&th=1&linkCode=ll2&tag=nilsschaller-21&linkId=2d917e28c278edc4f97f12c9d123aa29&ref_=as_li_ss_tl" target="_blank" rel="noopener sponsored">
+        Bei Amazon ansehen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+    <div class="card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12c3-6 6-9 9-9s6 3 9 9-6 9-9 9-6-3-9-9Z"/><path d="M7 12h10"/>
+        </svg>
+      </div>
+      <h3>LED Strips</h3>
+      <div class="price">9,34&nbsp;€</div>
+      <p class="note">Flexible LED-Streifen für die Slat-Wand oder hinter dem Monitor, für dezente Akzentbeleuchtung.</p>
+      <a class="buy" href="https://www.amazon.de/gp/product/B0F9W6BZHD?smid=A3QT8Y5U5GXKH2&th=1&linkCode=ll2&tag=nilsschaller-21&linkId=e772d50542eff375a37eb7627d9216d3&ref_=as_li_ss_tl" target="_blank" rel="noopener sponsored">
+        Bei Amazon ansehen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<div class="wrap">
+  <footer class="site">
+    <div>© 2026 Nils Schaller</div>
+    <button onclick="document.getElementById('legal').classList.add('open'); window.scrollTo(0,0);">Impressum &amp; Datenschutz</button>
+  </footer>
+</div>
+
+<div id="legal">
+  <div class="wrap">
+    <button class="back" onclick="document.getElementById('legal').classList.remove('open');">← Zurück zur Startseite</button>
+
+    <section>
+      <h2>Impressum</h2>
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p class="addr">
+        Nils Schaller<br>
+        Bergstraße 11<br>
+        07381 Oppurg<br>
+        Deutschland
+      </p>
+      <h3 style="margin-top:24px;">Kontakt</h3>
+      <p class="addr">E-Mail: schallernils07@gmail.com</p>
+      <h3 style="margin-top:24px;">Hinweis zu Affiliate-Links</h3>
+      <p>Diese Seite enthält Affiliate-Links zu Amazon. Als Amazon-Partner verdiene ich an qualifizierten Käufen, die über diese Links getätigt werden. Für dich entstehen dadurch keine zusätzlichen Kosten.</p>
+    </section>
+
+    <section>
+      <h2>Datenschutzerklärung</h2>
+      <h3>Verantwortlicher</h3>
+      <p class="addr">
+        Nils Schaller, Bergstraße 11, 07381 Oppurg<br>
+        E-Mail: schallernils07@gmail.com
+      </p>
+      <h3 style="margin-top:24px;">Erhebung von Daten auf dieser Seite</h3>
+      <p>Diese Seite selbst speichert oder verarbeitet keine personenbezogenen Daten. Es werden keine Cookies gesetzt und keine Formulare zur Dateneingabe angeboten.</p>
+      <h3 style="margin-top:24px;">Weiterleitung zu Amazon</h3>
+      <p>Die Produkt-Buttons führen direkt zu Amazon.de. Sobald du einen Link anklickst, verlässt du diese Seite und es gilt die Datenschutzerklärung von Amazon. Auf die dortige Datenverarbeitung habe ich keinen Einfluss.</p>
+      <h3 style="margin-top:24px;">Deine Rechte</h3>
+      <p>Du hast jederzeit das Recht auf Auskunft, Berichtigung oder Löschung deiner bei mir gespeicherten Daten. Da diese Seite keine Daten erhebt, betrifft das ausschließlich eine eventuelle Kontaktaufnahme per E-Mail. Kontaktiere mich dazu unter der oben genannten Adresse.</p>
+    </section>
+  </div>
+</div>
+
+</body>
+</html>
